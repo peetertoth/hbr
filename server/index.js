@@ -24,7 +24,12 @@ mongoose.connect(mongodbUrl, {
 app.get('/', (req, res) => {
     console.log('Homepage open');
     res.send('<h1>Hello World!</h1>');
-})
+});
+
+const student = require('./api/StudentController');
+app.use('/api/student', student);
+
+// Endpoints**
 
 const port = process.env.PORT || 8000;
 
