@@ -5,16 +5,37 @@ const router = express.Router();
 
 // Get
 router.get('/', async (req, res) => {
-    res.send(await studentService.get());
+    try {
+        let students = await studentService.get();
+        res.send(students);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
+// Get by id
+router.get('/:id', async (req, res) => {
+    try {
+        let studentById = await studentService.getById(req.params);
+        if (studentById) {
+            res.send(studentById);
+        } else {
+            res.status(404).send(`Cannot find student by id ${req.params.id}`);
+        }
+    } catch (e) {
+        res.status(500).send(e);
+    }
 });
 
 // Create
 router.post('/', async (req, res) => {
-    console.info(`Create student ${JSON.stringify(req.body)}`);
+    try {
+        let createdStudent = await studentService.create(req.body);
+        res.status(200).send(createdStudent);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 
-    await studentService.create(req.body);
-
-    res.status(200).send();
 });
 
 module.exports = router;

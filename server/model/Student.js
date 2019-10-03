@@ -21,7 +21,7 @@ const StudentSchema = mongoose.Schema(
         }
     },
     {
-        timestamp: true
+        timestamps: true
     }
 );
 

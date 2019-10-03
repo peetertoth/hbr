@@ -1,12 +1,12 @@
 const student = require('../model/Student');
 
 const get = async () => {
-    try {
-        return await student.find({}).exec();
-    } catch (e) {
-        console.error(`Failed to get students`, e);
-    }
-}
+    return await student.find({}).exec();
+};
+
+const getById = async ({id}) => {
+    return await student.findOne({_id: id}).exec();
+};
 
 const create = async ({firstName, lastName, neptun}) => {
     let aStudent = {
@@ -15,15 +15,11 @@ const create = async ({firstName, lastName, neptun}) => {
         neptun,
         fullName: lastName + ' ' + firstName
     };
-    try {
-        await new student(aStudent).save();
-        console.info('Student create successfully');
-    } catch (e) {
-        console.error(`Failed to create Student: ${aStudent}`, e);
-    }
+    return await student(aStudent).save();
 };
 
 module.exports = {
     get,
+    getById,
     create
 };
