@@ -29,6 +29,9 @@ app.get('/', (req, res) => {
 const student = require('./api/StudentController');
 app.use('/api/student', student);
 
+const group = require('./api/GroupController');
+app.use('/api/group', group);
+
 // Endpoints**
 
 const port = process.env.PORT || 8000;
