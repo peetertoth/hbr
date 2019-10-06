@@ -1,11 +1,17 @@
 const student = require('../model/Student');
+const studentGroupService = require('./StudentGroupService');
 
 const get = async () => {
     return await student.find({}).exec();
 };
 
 const getById = async ({id}) => {
-    return await student.findOne({_id: id}).exec();
+    let aStudent = await student.findOne({_id: id});
+    const groups = await studentGroupService.getStudentGroups(aStudent);
+
+    aStudent = {...aStudent.toObject(), groups};
+
+    return aStudent;
 };
 
 const create = async ({firstName, lastName, neptun}) => {
@@ -18,8 +24,14 @@ const create = async ({firstName, lastName, neptun}) => {
     return await student(aStudent).save();
 };
 
+const assignToGroup = async ({studentId, groupId}) => {
+    const createdEntity = await studentGroupService.create({studentId, groupId});
+    return createdEntity;
+};
+
 module.exports = {
     get,
     getById,
-    create
+    create,
+    assignToGroup
 };
