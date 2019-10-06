@@ -35,7 +35,16 @@ router.post('/', async (req, res) => {
     } catch (err) {
         res.status(500).send(err);
     }
+});
 
+// Assign to group
+router.post('/assign_to_group', async (req, res) => {
+    try {
+        const assign = await studentService.assignToGroup(req.body);
+        res.status(200).send(assign);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 module.exports = router;
