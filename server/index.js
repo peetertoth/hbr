@@ -2,10 +2,29 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const expressSession = require('express-session');
 // Import**
+
+// Environment variables
+const {
+    SRV_PORT = 8000,
+    SESS_SECRET = 'secret key'
+} = process.env;
 
 // Server instance
 const app = express();
+
+// Session config
+app.use(expressSession({
+    name: 'sid',
+    resave: false,
+    saveUninitialized: false,
+    secret: SESS_SECRET,
+    cookie: {
+        sameSite: true,
+        secure: false // set true on production
+    }
+}));
 
 // Middleware for express server
 app.use(bodyParser.json());
@@ -34,8 +53,7 @@ app.use('/api/group', group);
 
 // Endpoints**
 
-const port = process.env.PORT || 8000;
 
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+app.listen(SRV_PORT, () => {
+    console.log(`Server listening on port ${SRV_PORT}`);
 });
