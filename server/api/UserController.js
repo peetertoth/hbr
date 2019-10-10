@@ -1,5 +1,6 @@
 const express = require('express');
 const service = require('../service/UserService');
+const authService = require('../service/AuthService');
 
 const router = express.Router();
 
@@ -34,7 +35,7 @@ router.post('/logout', async (req, res) => {
     res.status(200).send();
 });
 
-router.get('/users', async (req, res) => {
+router.get('/users', authService.authenticationRequired, async (req, res) => {
     try {
         res.send(await service.get());
     } catch (err) {
