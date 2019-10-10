@@ -3,11 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressSession = require('express-session');
+const cookieParser = require('cookie-parser');
 // Import**
 
 // Environment variables
 const {
     SRV_PORT = 8000,
+    MONGODB_URL = 'mongodb://localhost/hbr',
     SESS_SECRET = 'secret key'
 } = process.env;
 
@@ -30,13 +32,14 @@ app.use(expressSession({
 app.use(bodyParser.json());
 
 // Init mongodb connection
-const mongodbUrl = process.env.MONGODB_URL || 'mongodb://localhost/hbr';
-console.info(`Initialize mongodb connection to ${mongodbUrl} ...`);
-mongoose.connect(mongodbUrl, {
+console.info(`Initialize mongodb connection to ${MONGODB_URL} ...`);
+mongoose.connect(MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
 });
+
+app.use(cookieParser());
 
 // **Endpoints
 
@@ -50,6 +53,9 @@ app.use('/api/student', student);
 
 const group = require('./api/GroupController');
 app.use('/api/group', group);
+
+const auth = require('./api/UserController');
+app.use('/api/user', auth);
 
 // Endpoints**
 
