@@ -4,14 +4,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
+const config = require('./config/config');
 // Import**
 
-// Environment variables
-const {
-    SRV_PORT = 8000,
-    MONGODB_URL = 'mongodb://localhost/hbr',
-    SESS_SECRET = 'secret key'
-} = process.env;
+
 
 // Server instance
 const app = express();
@@ -21,7 +17,7 @@ app.use(expressSession({
     name: 'sid',
     resave: false,
     saveUninitialized: false,
-    secret: SESS_SECRET,
+    secret: config.ENV.SESS_SECRET,
     cookie: {
         sameSite: true,
         secure: false // set true on production
@@ -32,8 +28,8 @@ app.use(expressSession({
 app.use(bodyParser.json());
 
 // Init mongodb connection
-console.info(`Initialize mongodb connection to ${MONGODB_URL} ...`);
-mongoose.connect(MONGODB_URL, {
+console.info(`Initialize mongodb connection to ${config.ENV.MONGODB_URL} ...`);
+mongoose.connect(config.ENV.MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
@@ -60,6 +56,6 @@ app.use('/api/user', auth);
 // Endpoints**
 
 
-app.listen(SRV_PORT, () => {
-    console.log(`Server listening on port ${SRV_PORT}`);
+app.listen(config.ENV.SRV_PORT, () => {
+    console.log(`Server listening on port ${config.ENV.SRV_PORT}`);
 });
