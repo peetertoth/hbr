@@ -4,13 +4,21 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
+const MongoStore = require('connect-mongo')(expressSession);
+
 const config = require('./config/config');
 // Import**
 
-
-
 // Server instance
 const app = express();
+
+// Init mongodb connection
+console.info(`Initialize mongodb connection to ${config.ENV.MONGODB_URL} ...`);
+mongoose.connect(config.ENV.MONGODB_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+});
 
 // Session config
 app.use(expressSession({
@@ -21,27 +29,27 @@ app.use(expressSession({
     cookie: {
         sameSite: true,
         secure: false // set true on production
-    }
+    },
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 // Middleware for express server
 app.use(bodyParser.json());
 
-// Init mongodb connection
-console.info(`Initialize mongodb connection to ${config.ENV.MONGODB_URL} ...`);
-mongoose.connect(config.ENV.MONGODB_URL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-});
-
-app.use(cookieParser());
+app.use(cookieParser(config.ENV.SESS_SECRET));
 
 // **Endpoints
 
 app.get('/', (req, res) => {
-    console.log('Homepage open');
-    res.send('<h1>Hello World!</h1>');
+    const { session } = req;
+    const { views } = session;
+    session.views = views ? views + 1 : 1;
+
+    if (session.user) {
+        res.send(`<h1>Greetings ${ session.user.name }!</h1><p>Views: ${ session.views }</p>`);
+    } else {
+        res.send(`<h1>Hello World!</h1><p>Views: ${ session.views }</p>`);
+    }
 });
 
 const student = require('./api/StudentController');

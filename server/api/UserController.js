@@ -16,12 +16,22 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const aUser = await service.findByEmailAndPassword(req.body);
-        // TODO login
+
+        req.session.user = aUser;
+        await req.session.save();
+
         res.status(200).send(aUser);
     } catch (err) {
         console.error(`Error during login user: ${err}`, err);
         res.status(500).send(err);
     }
+});
+
+router.post('/logout', async (req, res) => {
+    if (req.session.user) {
+        req.session.destroy();
+    }
+    res.status(200).send();
 });
 
 router.get('/users', async (req, res) => {
