@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(expressSession);
+const cors = require('cors');
 
 const config = require('./config/config');
 // Import**
@@ -37,6 +38,8 @@ app.use(expressSession({
 app.use(bodyParser.json());
 
 app.use(cookieParser(config.ENV.SESS_SECRET));
+
+app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
 
 // **Endpoints
 
