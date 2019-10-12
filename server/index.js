@@ -39,7 +39,23 @@ app.use(bodyParser.json());
 
 app.use(cookieParser(config.ENV.SESS_SECRET));
 
-app.use(cors({ origin: 'http://localhost:8080', credentials: true }));
+const corsOrigins = [
+    'http://localhost:8080',
+    'http://192.168.0.143:8080',
+];
+
+app.use(cors({
+    origin: function(origin, cb) {
+        if (corsOrigins.indexOf(origin) !== -1) {
+            console.log('allowed', origin);
+            cb(null, true);
+        } else {
+            console.log('NOT allowed', origin);
+            cb(new Error('Origin not allowed by CORS'));
+        }
+    },
+    credentials: true,
+}));
 
 // **Endpoints
 

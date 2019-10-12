@@ -47,6 +47,6 @@
               console.log('response', JSON.stringify(response));
           }
       }
-  }
+  };
 
 </script>

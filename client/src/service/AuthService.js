@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = 'http://192.168.0.143:8000/api';
 
 class AuthService {
   async getUser() {
