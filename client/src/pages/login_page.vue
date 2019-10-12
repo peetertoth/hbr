@@ -28,25 +28,37 @@
   import AuthService from '../service/AuthService';
 
   export default {
-      data() {
-          return {
-              model: {
-                  email: '',
-                  password: '',
-              },
-          };
+    data() {
+      return {
+        model: {
+          email: '',
+          password: '',
+        },
+      };
+    },
+    methods: {
+      async login() {
+        this.$store.dispatch('startLoading');
+
+        const response = await AuthService.loginUser(this.model);
+        const { status } = response;
+        if (status === 200) {
+          this.$store.dispatch('getCurrentUser');
+
+          this.$store.dispatch('stopLoading').then(() => {
+            this.$toast.success({
+              title: 'Sikeres',
+              message: 'Bejelentkezés sikeres',
+            });
+            this.$router.push({ name: 'home' });
+          });
+        } else {
+          console.log('response', JSON.stringify(response));
+
+          this.$store.dispatch('stopLoading');
+        }
       },
-      methods: {
-          async login() {
-              const response = await AuthService.loginUser(this.model);
-              let { status } = response;
-              if (status === 200) {
-                  this.$store.dispatch('getCurrentUser');
-                  this.$router.push({ name: 'home' });
-              }
-              console.log('response', JSON.stringify(response));
-          }
-      }
+    },
   };
 
 </script>

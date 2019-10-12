@@ -6,9 +6,9 @@
 
     <b-collapse is-nav id="nav_collapse">
 
-<!--      <b-navbar-nav>-->
-<!--        <b-nav-item href="#">Link</b-nav-item>-->
-<!--      </b-navbar-nav>-->
+      <!--      <b-navbar-nav>-->
+      <!--        <b-nav-item href="#">Link</b-nav-item>-->
+      <!--      </b-navbar-nav>-->
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
@@ -18,7 +18,7 @@
           <template slot="button-content">
             {{ user.name }}
           </template>
-          <b-dropdown-item href="#" @click="navigateTo('profile')"> Profil </b-dropdown-item>
+          <b-dropdown-item href="#" @click="navigateTo('profile')"> Profil</b-dropdown-item>
           <b-dropdown-item href="#" @click="logout">Kijelentkezés</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item right href="#" v-else
@@ -34,31 +34,38 @@
   import { mapState } from 'vuex';
 
   export default {
-      computed: {
-        ...mapState({
-            user: state => state.user
-        })
-      },
-      data() {
-          return {
-          };
-      },
-      async created() {
-          if (!this.user) {
-              // try to get user from server
-              console.log('User is not in store, try to get from server');
-              this.$store.dispatch('getCurrentUser');
-          }
-      },
-      methods: {
-          navigateTo(name) {
-              this.$router.push({name});
-          },
-          logout() {
-              console.log('Logout user');
-              this.$store.dispatch('logoutUser');
-              this.$router.push({ name: 'home' });
-          }
+    computed: {
+      ...mapState({
+        user: state => state.user,
+      }),
+    },
+    data() {
+      return {};
+    },
+    async created() {
+      if (!this.user) {
+        // try to get user from server
+        // console.log('User is not in store, try to get from server');
+        await this.$store.dispatch('getCurrentUser');
       }
+    },
+    methods: {
+      navigateTo(name) {
+        this.$router.push({ name });
+      },
+      logout() {
+        this.$store.dispatch('startLoading');
+
+        this.$store.dispatch('logoutUser');
+
+        this.$store.dispatch('stopLoading').then(() => {
+          this.$router.push({ name: 'home' });
+          this.$toast.success({
+            title: 'Kijelentkezés',
+            message: 'Sikeres kijelentkezés',
+          });
+        });
+      },
+    },
   };
 </script>

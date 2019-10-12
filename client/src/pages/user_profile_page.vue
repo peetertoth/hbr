@@ -9,10 +9,10 @@
   import { mapState } from 'vuex';
 
   export default {
-      computed: {
-          ...mapState({
-              user: state => state.user
-          })
-      }
+    computed: {
+      ...mapState({
+        user: state => state.user
+      })
+    }
   };
 </script>

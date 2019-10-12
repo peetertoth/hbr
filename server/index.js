@@ -46,8 +46,11 @@ const corsOrigins = [
 
 app.use(cors({
     origin: function(origin, cb) {
-        if (corsOrigins.indexOf(origin) !== -1) {
-            console.log('allowed', origin);
+        if (corsOrigins.indexOf(origin) !== -1 || !origin) {
+            // console.log('allowed', origin);
+            if (!origin) {
+                console.log('no origin');
+            }
             cb(null, true);
         } else {
             console.log('NOT allowed', origin);
