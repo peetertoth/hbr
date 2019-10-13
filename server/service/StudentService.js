@@ -1,5 +1,6 @@
 const student = require('../model/Student');
 const studentGroupService = require('./StudentGroupService');
+const groupService = require('./GroupService');
 
 const get = async () => {
     return await student.find({}).exec();
@@ -26,6 +27,7 @@ const create = async ({firstName, lastName, neptun}) => {
 
 const assignToGroup = async ({studentId, groupId}) => {
     const createdEntity = await studentGroupService.create({studentId, groupId});
+    await groupService.incrementStudentsCount({ id: groupId, value: 1 });
     return createdEntity;
 };
 
