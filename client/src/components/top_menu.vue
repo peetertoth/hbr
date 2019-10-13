@@ -1,14 +1,15 @@
 <template>
-  <b-navbar toggleable="md" type="dark" variant="dark" sticky>
+  <b-navbar id="top-menu" toggleable="md" type="dark" variant="dark" sticky>
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
     <b-navbar-brand href="#" class="mr-xl-5" @click="navigateTo('home')">HBR</b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
 
-      <!--      <b-navbar-nav>-->
-      <!--        <b-nav-item href="#">Link</b-nav-item>-->
-      <!--      </b-navbar-nav>-->
+      <b-navbar-nav>
+        <b-nav-item href="#" v-if="user"
+                    @click="navigateTo('groups')">Csoportok</b-nav-item>
+      </b-navbar-nav>
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
@@ -29,6 +30,11 @@
     </b-collapse>
   </b-navbar>
 </template>
+<style>
+  #top-menu {
+    text-align: center;
+  }
+</style>
 <script>
 
   import { mapState } from 'vuex';

@@ -10,7 +10,7 @@
 
 <style>
   #app {
-    text-align: center;
+    /*text-align: center;*/
   }
 
   #loading {

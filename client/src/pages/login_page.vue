@@ -1,6 +1,10 @@
 <template>
   <b-container>
-    <h1 class="mb-3"> Bejelentkezés </h1>
+    <b-row align-h="center" class="mt-3 mt-xl-5">
+      <b-col cols="12" xl="5" align="center">
+        <h1> Bejelentkezés </h1>
+      </b-col>
+    </b-row>
     <b-row align-h="center" class="mt-3 mt-xl-5">
       <b-col cols="12" xl="5" align="left">
         <form>
@@ -53,7 +57,7 @@
             this.$router.push({ name: 'home' });
           });
         } else {
-          console.log('response', JSON.stringify(response));
+          // console.log('response', JSON.stringify(response));
 
           this.$store.dispatch('common/stopLoading', null, { root: true });
         }

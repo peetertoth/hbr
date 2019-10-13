@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import LoginPage from './pages/login_page.vue';
 import UserProfilePage from './pages/user_profile_page.vue';
+import GroupListPage from './pages/group_list_page.vue';
 
 Vue.use(Router);
 
@@ -33,6 +34,14 @@ const router = new Router({
       path: '/profile',
       name: 'profile',
       component: UserProfilePage,
+      meta: {
+        authRequired: true,
+      },
+    },
+    {
+      path: '/groups',
+      name: 'groups',
+      component: GroupListPage,
       meta: {
         authRequired: true,
       },
