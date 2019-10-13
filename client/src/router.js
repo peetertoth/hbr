@@ -2,8 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Home from './views/Home.vue';
-import LoginPage from './pages/login_page';
-import UserProfilePage from './pages/user_profile_page';
+import LoginPage from './pages/login_page.vue';
+import UserProfilePage from './pages/user_profile_page.vue';
 
 Vue.use(Router);
 
@@ -27,16 +27,16 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: LoginPage
+      component: LoginPage,
     },
     {
       path: '/profile',
       name: 'profile',
       component: UserProfilePage,
       meta: {
-        authRequired: true
-      }
-    }
+        authRequired: true,
+      },
+    },
   ],
 });
 

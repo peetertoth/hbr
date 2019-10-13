@@ -47,7 +47,7 @@
     },
     computed: {
       ...mapState({
-        loading: state => state.loading,
+        loading: state => state.common.loading,
       }),
     },
     data() {

@@ -36,7 +36,7 @@
   export default {
     computed: {
       ...mapState({
-        user: state => state.user,
+        user: state => state.user.user,
       }),
     },
     data() {
@@ -46,7 +46,7 @@
       if (!this.user) {
         // try to get user from server
         // console.log('User is not in store, try to get from server');
-        await this.$store.dispatch('getCurrentUser');
+        await this.$store.dispatch('user/getCurrentUser', null, { root: true });
       }
     },
     methods: {
@@ -54,11 +54,11 @@
         this.$router.push({ name });
       },
       logout() {
-        this.$store.dispatch('startLoading');
+        this.$store.dispatch('common/startLoading', null, { root: true });
 
-        this.$store.dispatch('logoutUser');
+        this.$store.dispatch('user/logoutUser', null, { root: true });
 
-        this.$store.dispatch('stopLoading').then(() => {
+        this.$store.dispatch('common/stopLoading', null, { root: true }).then(() => {
           this.$router.push({ name: 'home' });
           this.$toast.success({
             title: 'Kijelentkezés',

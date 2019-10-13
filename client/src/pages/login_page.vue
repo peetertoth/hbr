@@ -25,7 +25,7 @@
   </b-container>
 </template>
 <script>
-  import AuthService from '../service/AuthService';
+  import AuthService from '../service/auth_service';
 
   export default {
     data() {
@@ -38,14 +38,14 @@
     },
     methods: {
       async login() {
-        this.$store.dispatch('startLoading');
+        this.$store.dispatch('common/startLoading', null, { root: true });
 
         const response = await AuthService.loginUser(this.model);
         const { status } = response;
         if (status === 200) {
-          this.$store.dispatch('getCurrentUser');
+          this.$store.dispatch('user/getCurrentUser', null, { root: true });
 
-          this.$store.dispatch('stopLoading').then(() => {
+          this.$store.dispatch('common/stopLoading', null, { root: true }).then(() => {
             this.$toast.success({
               title: 'Sikeres',
               message: 'Bejelentkezés sikeres',
@@ -55,7 +55,7 @@
         } else {
           console.log('response', JSON.stringify(response));
 
-          this.$store.dispatch('stopLoading');
+          this.$store.dispatch('common/stopLoading', null, { root: true });
         }
       },
     },
