@@ -15,7 +15,7 @@
     <!-- Content -->
     <b-row align-h="center" class="mt-3">
       <b-col cols="12" xl="10">
-        <b-table stacked="sm" borderless hover head-variant="light"
+        <b-table stacked="sm" simple hover head-variant="light"
                  :items="items"
                  :fields="tableFields"
                  :busy="loadingItems"
@@ -88,7 +88,7 @@
     },
     methods: {
       openGroupDetails(groupId) {
-        console.log('TODO: open group details', groupId);
+        this.$router.push({ name: 'group-details', params: { id: groupId } });
       },
       createNewGroup() {
         console.log('TODO: open group creation page');

@@ -30,10 +30,15 @@ const incrementStudentsCount = async ({ id, value }) => {
   const res = await group.updateOne({ _id: id }, { $inc: { studentsCount: value } });
 };
 
+const edit = async({ id, name }) => {
+  const res = await group.updateOne({ _id: id }, { $set: { name }});
+};
+
 module.exports = {
   get,
   getById,
   searchByName,
   create,
-  incrementStudentsCount
+  incrementStudentsCount,
+  edit,
 };
