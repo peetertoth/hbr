@@ -60,4 +60,14 @@ const router = new Router({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  store.dispatch('common/startLoading', null, { root: true });
+  next();
+});
+
+router.afterEach((to, from, next) => {
+  store.dispatch('common/stopLoading', null, { root: true });
+  next();
+});
+
 export default router;

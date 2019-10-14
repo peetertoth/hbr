@@ -18,7 +18,7 @@ export default {
         setTimeout(() => {
           commit({ type: 'setLoading', loading: false });
           resolve();
-        }, 800);
+        }, 500);
       });
     },
   },
