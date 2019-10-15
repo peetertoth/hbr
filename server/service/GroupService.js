@@ -7,11 +7,17 @@ const get = async () => {
 
 const getById = async ({ id }) => {
   let aGroup = await group.findOne({ _id: id }).exec();
-  const students = await studentGroupService.getGroupStudents(aGroup);
+  if (aGroup) {
+    const students = await studentGroupService.getGroupStudents(aGroup);
 
-  aGroup = { ...aGroup.toObject(), students };
+    aGroup = { ...aGroup.toObject(), students };
+  }
 
   return aGroup;
+};
+
+const getByName = async ({ name }) => {
+  return await group.findOne({ name });
 };
 
 const searchByName = async ({ name }) => {
@@ -37,6 +43,7 @@ const edit = async({ id, name }) => {
 module.exports = {
   get,
   getById,
+  getByName,
   searchByName,
   create,
   incrementStudentsCount,

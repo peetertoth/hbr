@@ -3,37 +3,41 @@ const studentGroupService = require('./StudentGroupService');
 const groupService = require('./GroupService');
 
 const get = async () => {
-    return await student.find({}).exec();
+  return await student.find({}).exec();
 };
 
-const getById = async ({id}) => {
-    let aStudent = await student.findOne({_id: id});
-    const groups = await studentGroupService.getStudentGroups(aStudent);
+const getById = async ({ id }) => {
+  let aStudent = await student.findOne({ _id: id });
+  const groups = await studentGroupService.getStudentGroups(aStudent);
 
-    aStudent = {...aStudent.toObject(), groups};
+  aStudent = { ...aStudent.toObject(), groups };
 
-    return aStudent;
+  return aStudent;
 };
 
-const create = async ({firstName, lastName, neptun}) => {
-    let aStudent = {
-        firstName,
-        lastName,
-        neptun,
-        fullName: lastName + ' ' + firstName
-    };
-    return await student(aStudent).save();
+const getByNeptun = async ({ neptun }) => {
+  return await student.findOne({ neptun });
 };
 
-const assignToGroup = async ({studentId, groupId}) => {
-    const createdEntity = await studentGroupService.create({studentId, groupId});
-    await groupService.incrementStudentsCount({ id: groupId, value: 1 });
-    return createdEntity;
+const create = async ({ firstName, lastName, neptun }) => {
+  let aStudent = {
+    firstName,
+    lastName,
+    neptun,
+    fullName: lastName + ' ' + firstName
+  };
+  return await student(aStudent).save();
+};
+
+const assignToGroup = async ({ studentId, groupId }) => {
+  const createdEntity = await studentGroupService.create({ studentId, groupId });
+  await groupService.incrementStudentsCount({ id: groupId, value: 1 });
+  return createdEntity;
 };
 
 module.exports = {
-    get,
-    getById,
-    create,
-    assignToGroup
+  get,
+  getById,
+  create,
+  assignToGroup
 };

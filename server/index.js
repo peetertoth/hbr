@@ -6,6 +6,7 @@ const expressSession = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(expressSession);
 const cors = require('cors');
+const morgan = require('morgan');
 
 const config = require('./config/config');
 // Import**
@@ -38,6 +39,8 @@ app.use(expressSession({
 app.use(bodyParser.json());
 
 app.use(cookieParser(config.ENV.SESS_SECRET));
+
+app.use(morgan('dev'));
 
 const corsOrigins = [
     'http://localhost:8080',
@@ -84,6 +87,24 @@ const auth = require('./api/UserController');
 app.use('/api/user', auth);
 
 // Endpoints**
+
+// Error handling
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    const jsonResponse = {
+        error: {
+            message: err.message,
+        },
+    };
+
+    const errorKeys = Object.keys(err);
+    for (let i = 0; i < errorKeys.length; i++) {
+        const key = errorKeys[i];
+        jsonResponse.error[key] = err[key];
+    }
+
+    res.json(jsonResponse);
+});
 
 
 app.listen(config.ENV.SRV_PORT, () => {
