@@ -1,4 +1,4 @@
-const MissingRequestParamError = require('../error/MissingRequestParamError');
+const MissingRequestParamError = require('../../model/error/MissingRequestParamError');
 
 const validateRequestParam = (params, requestParams, next) => {
   const missingParams = [];
