@@ -14,10 +14,8 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
     try {
-        console.log('login', JSON.stringify(req.body));
-
         const aUser = await service.findByEmailAndPassword(req.body);
 
         req.session.user = aUser;
@@ -26,7 +24,7 @@ router.post('/login', async (req, res) => {
         res.status(200).send(aUser);
     } catch (err) {
         console.error(`Error during login user: ${err}`, err);
-        res.status(500).send(err);
+        next(err);
     }
 });
 
@@ -39,11 +37,11 @@ router.post('/logout', async (req, res) => {
     res.status(200).send();
 });
 
-router.get('/users', authService.authenticationRequired, async (req, res) => {
+router.get('/users', authService.authenticationRequired, async (req, res, next) => {
     try {
         res.send(await service.get());
     } catch (err) {
-        res.status(500).send(e);
+        next(e);
     }
 });
 

@@ -44,9 +44,9 @@
       async login() {
         this.$store.dispatch('common/startLoading', null, { root: true });
 
-        const response = await AuthService.loginUser(this.model);
-        const { status } = response;
-        if (status === 200) {
+        try {
+          const response = await AuthService.loginUser(this.model);
+
           this.$store.dispatch('user/getCurrentUser', null, { root: true });
 
           this.$store.dispatch('common/stopLoading', null, { root: true }).then(() => {
@@ -56,9 +56,7 @@
             });
             this.$router.push({ name: 'home' });
           });
-        } else {
-          // console.log('response', JSON.stringify(response));
-
+        } catch (e) {
           this.$store.dispatch('common/stopLoading', null, { root: true });
         }
       },
