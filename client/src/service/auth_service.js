@@ -1,18 +1,20 @@
-import axios from 'axios';
-import CONFIG from '../config';
+import HttpClient from './base_http_client';
 
 const getUser = async () => {
-  const res = await axios.get(`${CONFIG.API_BASE_URL}/user/current`, { withCredentials: true });
+  const res = await HttpClient.GET('/user/current');
   return res.data;
 };
 
 const logoutUser = async () => {
-  const res = await axios.post(`${CONFIG.API_BASE_URL}/user/logout`, {}, { withCredentials: true });
+  const res = await HttpClient.POST('/user/logout', {});
   return res;
 };
 
 const loginUser = async ({ email, password }) => {
-  const res = await axios.post(`${CONFIG.API_BASE_URL}/user/login`, { email, password }, { withCredentials: true });
+  const res = await HttpClient.POST('/user/login', {
+    email,
+    password,
+  });
   return res;
 };
 

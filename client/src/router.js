@@ -65,9 +65,8 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-router.afterEach((to, from, next) => {
+router.afterEach(() => {
   store.dispatch('common/stopLoading', null, { root: true });
-  next();
 });
 
 export default router;
