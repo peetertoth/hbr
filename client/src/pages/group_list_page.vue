@@ -1,12 +1,12 @@
 <template>
   <b-container>
     <b-row align-h="center">
-      <b-col cols="12" xl="10">
+      <b-col cols="12">
         <h1>Csoportok</h1>
       </b-col>
     </b-row>
     <b-row align-h="center">
-      <b-col cols="12" xl="10" class="mt-3">
+      <b-col cols="12" class="mt-3">
         <b-button variant="outline-primary" @click="createNewGroup">
           Új csoport létrehozása
         </b-button>
@@ -14,7 +14,7 @@
     </b-row>
     <!-- Content -->
     <b-row align-h="center" class="mt-3">
-      <b-col cols="12" xl="10">
+      <b-col cols="12">
         <b-table stacked="sm" simple hover head-variant="light"
                  :items="items"
                  :fields="tableFields"

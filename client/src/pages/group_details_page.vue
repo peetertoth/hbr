@@ -5,7 +5,7 @@
       <b-col xl="2">
         <label><strong>Név:</strong></label>
       </b-col>
-      <b-col xl="6">
+      <b-col xl="10">
         <input-edit v-model="group.name" @edit="onNameChange"></input-edit>
       </b-col>
     </b-row>
@@ -13,8 +13,31 @@
       <b-col xl="2">
         <label><strong>Létrehozva:</strong></label>
       </b-col>
-      <b-col xl="6">
+      <b-col xl="10">
         {{ group.createdAt }}
+      </b-col>
+    </b-row>
+
+    <h2 class="my-5">Csoporthoz rendelt halgatók</h2>
+    <b-row align-h="center">
+      <b-col cols="12">
+        <b-table stacked="sm" simple hover head-variant="light"
+                 :items="group.students"
+                 :fields="tableFields"
+                 :busy="loadingItems"
+        >
+          <template v-slot:table-busy>
+            <div class="text-center text-danger my-2">
+              <b-spinner big type="grow" label="Spinning"></b-spinner>
+            </div>
+          </template>
+
+          <template v-slot:cell(actions)="data">
+            <b-button variant="outline-info" @click="openUserDetails(data.item._id)">
+              Részletek
+            </b-button>
+          </template>
+        </b-table>
       </b-col>
     </b-row>
   </b-container>
@@ -30,7 +53,29 @@
     },
     data() {
       return {
-        initialized: false
+        initialized: false,
+        tableFields: [
+          {
+            key: 'fullName',
+            label: 'Név',
+            sortable: false,
+          },
+          {
+            key: 'neptun',
+            label: 'Neptun',
+            sortable: false,
+          },
+          {
+            key: 'createdAt',
+            label: 'Csoporthoz rendelve',
+            sortable: false,
+          },
+          {
+            key: 'actions',
+            label: 'Műveletek',
+            sortable: false,
+          },
+        ],
       };
     },
     computed: {
@@ -52,6 +97,13 @@
             title: 'Sikeres',
             message: 'Csoport frissítése sikeres',
           });
+        });
+      },
+      openUserDetails(id) {
+        console.warn('TODO: implement openUserDetails');
+        this.$toast.warn({
+          title: 'Warn',
+          message: 'TODO: implement openUserDetails',
         });
       },
     },
