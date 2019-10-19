@@ -9,7 +9,20 @@ const getById = async ({ id }) => {
 
   if (aStudent) {
     const studentGroupService = require('./StudentGroupService');
-    const groups = await studentGroupService.getStudentGroups(aStudent);
+    const groupService = require('./GroupService');
+
+    const studentGroups = await studentGroupService.getStudentGroups(aStudent);
+    const groupIds = studentGroups.map(({ groupId }) => groupId);
+    const groups = await groupService.getByIdList(groupIds);
+
+    for (let i = 0; i < groups.length; i++) {
+      for (let j = 0; j < studentGroups.length; j++) {
+        if (groups[i]._id.toString() === studentGroups[j].studentId) {
+          groups[i] = { ...groups[i].toObject(), ...studentGroups[j].toObject() };
+          break;
+        }
+      }
+    }
 
     aStudent = { ...aStudent.toObject(), groups };
   }
@@ -30,7 +43,6 @@ const create = async ({ firstName, lastName, neptun }) => {
   };
   return await student(aStudent).save();
 };
-
 
 const getByIdList = async (idList) => {
   const listOfStudents = await student.find({ _id: { $in: idList } });

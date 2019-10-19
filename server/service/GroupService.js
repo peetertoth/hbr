@@ -53,6 +53,11 @@ const edit = async({ id, name }) => {
   const res = await group.updateOne({ _id: id }, { $set: { name }});
 };
 
+const getByIdList = async (idList) => {
+  const listOfGroups = await group.find({ _id: { $in: idList } });
+  return listOfGroups;
+};
+
 module.exports = {
   get,
   getById,
@@ -61,4 +66,5 @@ module.exports = {
   create,
   incrementStudentsCount,
   edit,
+  getByIdList,
 };

@@ -29,11 +29,9 @@ const getStudentGroups = async (student) => {
     studentId: student.id
   }).exec();
 
-  const groupIds = studentGroups.map(({ groupId }) => groupId);
+  console.info(`Groups found { content: ${JSON.stringify(studentGroups)} }`);
 
-  console.info(`Groups found { content: ${JSON.stringify(groupIds)} }`);
-
-  return groupIds;
+  return studentGroups;
 };
 
 const getGroupStudents = async (group) => {

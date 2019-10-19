@@ -16,7 +16,7 @@ router.get('/students', async (req, res) => {
 });
 
 // Get by id
-router.get('/:id', async (req, res, next) => {
+router.get('/id/:id', async (req, res, next) => {
     if (validator.validateRequestParam(['id'], req.params, next)) {
         return;
     }

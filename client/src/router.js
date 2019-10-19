@@ -7,6 +7,7 @@ import UserProfilePage from './pages/user_profile_page.vue';
 import GroupListPage from './pages/group_list_page.vue';
 import GroupDetailsPage from './pages/group_details_page.vue';
 import StudentListPage from './pages/student_list_page.vue';
+import StudentDetailsPage from './pages/student_details_page.vue';
 
 import store from './store';
 
@@ -62,6 +63,14 @@ const router = new Router({
       path: '/student',
       name: 'student',
       component: StudentListPage,
+      meta: {
+        authRequired: true,
+      },
+    },
+    {
+      path: '/student/:id',
+      name: 'student-details',
+      component: StudentDetailsPage,
       meta: {
         authRequired: true,
       },

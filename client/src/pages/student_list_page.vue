@@ -83,7 +83,7 @@
     methods: {
       openStudentDetails(studentId) {
         console.warn('TODO: open student details ' + studentId);
-        // this.$router.push({ name: 'student-details', params: { id: studentId } });
+        this.$router.push({ name: 'student-details', params: { id: studentId } });
       },
       createNewStudent() {
         console.log('TODO: open student creation page');
