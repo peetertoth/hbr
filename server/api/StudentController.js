@@ -10,7 +10,7 @@ const router = express.Router();
 const entityType = 'Student';
 
 // Get
-router.get('/', async (req, res) => {
+router.get('/students', async (req, res) => {
     let students = await studentService.get();
     res.send(students);
 });

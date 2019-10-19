@@ -9,6 +9,8 @@
       <b-navbar-nav>
         <b-nav-item href="#" v-if="user"
                     @click="navigateTo('group')">Csoportok</b-nav-item>
+        <b-nav-item href="#" v-if="user"
+                    @click="navigateTo('student')">Hallgatók</b-nav-item>
       </b-navbar-nav>
 
       <!-- Right aligned nav items -->
