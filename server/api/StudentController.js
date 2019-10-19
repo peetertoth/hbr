@@ -1,5 +1,6 @@
 const express = require('express');
 const studentService = require('../service/StudentService');
+const studentGroupService = require('../service/StudentGroupService');
 
 const validator = require('./validator/Validator');
 const ValidationError = require('../model/error/ValidationError');
@@ -64,7 +65,7 @@ router.post('/assign_to_group', async (req, res, next) => {
     }
 
     try {
-        const assign = await studentService.assignToGroup(req.body);
+        const assign = await studentGroupService.assignStudentToGroup(req.body);
         res.status(200).send(assign);
     } catch (err) {
         next(err);

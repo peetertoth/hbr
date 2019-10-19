@@ -1,5 +1,4 @@
 const group = require('../model/Group');
-const studentGroupService = require('./StudentGroupService');
 
 const get = async () => {
   return await group.find({}).exec();
@@ -8,7 +7,21 @@ const get = async () => {
 const getById = async ({ id }) => {
   let aGroup = await group.findOne({ _id: id }).exec();
   if (aGroup) {
-    const students = await studentGroupService.getGroupStudents(aGroup);
+    const studentGroupService = require('./StudentGroupService');
+    const studentService = require('./StudentService');
+
+    const groupStudents = await studentGroupService.getGroupStudents(aGroup);
+    const studentIds = groupStudents.map(({ studentId }) => studentId);
+    const students = await studentService.getByIdList(studentIds);
+
+    for (let i = 0; i < students.length; i++) {
+      for (let j = 0; j < groupStudents.length; j++) {
+        if (students[i]._id.toString() === groupStudents[j].studentId) {
+          students[i] = { ...students[i].toObject(), ...groupStudents[j].toObject() };
+          break;
+        }
+      }
+    }
 
     aGroup = { ...aGroup.toObject(), students };
   }

@@ -1,5 +1,9 @@
 const model = require('../model/StudentGroup');
 
+const groupService = require('./GroupService');
+
+const ValidationError = require('../model/error/ValidationError');
+
 const get = async () => {
   return await model.find({}).exec();
 };
@@ -39,11 +43,20 @@ const getGroupStudents = async (group) => {
     groupId: group.id
   }).exec();
 
-  const studentIds = groupStudents.map(({ studentId }) => studentId);
+  console.info(`Students found { content: ${JSON.stringify(groupStudents)} }`);
 
-  console.info(`Students found { content: ${JSON.stringify(studentIds)} }`);
+  return groupStudents;
+};
 
-  return studentIds;
+const assignStudentToGroup = async ({ studentId, groupId }) => {
+  const existingStudentGroup = await this.getByStudentIdAndGroupId({ studentId, groupId });
+  if (existingStudentGroup) {
+    throw new ValidationError(`Cannot assign to group, connection already exists. { studentId: ${studentId}, groupId: ${groupId} }`);
+  }
+
+  const createdEntity = await this.create({ studentId, groupId });
+  await groupService.incrementStudentsCount({ id: groupId, value: 1 });
+  return createdEntity;
 };
 
 module.exports = {
@@ -51,5 +64,6 @@ module.exports = {
   create,
   getStudentGroups,
   getGroupStudents,
-  getByStudentIdAndGroupId
+  getByStudentIdAndGroupId,
+  assignStudentToGroup
 };
