@@ -6,7 +6,7 @@
         <label><strong>Vezetéknév:</strong></label>
       </b-col>
       <b-col xl="10">
-        <input-edit v-model="student.lastName" @edit=""></input-edit>
+        <input-edit v-model="student.lastName" ></input-edit>
       </b-col>
     </b-row>
     <b-row class="my-2">
@@ -14,7 +14,7 @@
         <label><strong>Keresztnév:</strong></label>
       </b-col>
       <b-col xl="10">
-        <input-edit v-model="student.firstName" @edit=""></input-edit>
+        <input-edit v-model="student.firstName" ></input-edit>
       </b-col>
     </b-row>
     <b-row class="my-2">
@@ -22,7 +22,7 @@
         <label><strong>Neptun:</strong></label>
       </b-col>
       <b-col xl="10">
-        <input-edit v-model="student.neptun" @edit=""></input-edit>
+        <input-edit v-model="student.neptun" ></input-edit>
       </b-col>
     </b-row>
     <b-row class="">

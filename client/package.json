@@ -41,11 +41,19 @@
         "error",
         "windows"
       ],
-      "vue/script-indent": ["error",2,{"baseIndent": 1}]
+      "vue/script-indent": [
+        "error",
+        2,
+        {
+          "baseIndent": 1
+        }
+      ]
     },
     "overrides": [
       {
-        "files": ["*.vue"],
+        "files": [
+          "*.vue"
+        ],
         "rules": {
           "indent": "off"
         }

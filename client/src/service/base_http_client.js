@@ -1,5 +1,5 @@
 import axios from 'axios';
-import vue from '../main';
+import Vue from 'vue';
 import CONFIG from '../config';
 
 class HttpClient {
@@ -11,7 +11,7 @@ class HttpClient {
           console.error('Error during GET request', err);
 
           if (showError === true) {
-            vue.$toast.error({
+            Vue.toast.error({
               title: 'Sikertelen',
               message: err.message,
             });
@@ -31,7 +31,7 @@ class HttpClient {
           console.error('Error during POST request', JSON.stringify(err.response));
 
           if (showError === true) {
-            vue.$toast.error({
+            Vue.toast.error({
               title: 'Sikertelen',
               message: err.response.data.error.message,
               timeOut: 5000,
@@ -43,7 +43,6 @@ class HttpClient {
     });
     return promise;
   }
-
 }
 
 export default HttpClient;

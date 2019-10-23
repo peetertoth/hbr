@@ -23,8 +23,10 @@ Vue.use(CxltToastr, {
 
 Vue.config.productionTip = false;
 
-export default new Vue({
+const vue = new Vue({
   router,
   store,
   render: h => h(App),
 }).$mount('#app');
+
+Vue.toast = vue.$toast;
