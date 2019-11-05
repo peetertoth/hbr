@@ -10,6 +10,9 @@
         <b-button variant="outline-primary" @click="createNewStudent">
           Új hallgató felvétele
         </b-button>
+        <b-button class="ml-2" variant="outline-primary" @click="importStudents">
+          Hallgatók felvétele
+        </b-button>
       </b-col>
     </b-row>
     <!-- Content -->
@@ -42,6 +45,9 @@
   export default {
     data() {
       return {
+        modal: {
+          text: '',
+        },
         loadingItems: false,
         tableFields: [
           {
@@ -82,11 +88,13 @@
     },
     methods: {
       openStudentDetails(studentId) {
-        console.warn(`TODO: open student details ${studentId}`);
         this.$router.push({ name: 'student-details', params: { id: studentId } });
       },
       createNewStudent() {
         console.log('TODO: open student creation page');
+      },
+      importStudents() {
+        this.$router.push({ name: 'import-students' });
       },
     },
   };

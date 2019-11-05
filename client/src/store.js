@@ -7,6 +7,7 @@ import GroupListModule from './store_modules/group_list_module';
 import GroupDetailsModule from './store_modules/group_details_module';
 import StudentListModule from './store_modules/student_list_module';
 import StudentDetailsModule from './store_modules/student_details_module';
+import StudentImportModule from './store_modules/student_import_module';
 
 Vue.use(Vuex);
 
@@ -18,5 +19,6 @@ export default new Vuex.Store({
     groupDetails: GroupDetailsModule,
     student: StudentListModule,
     studentDetails: StudentDetailsModule,
+    studentImport: StudentImportModule,
   },
 });
