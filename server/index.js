@@ -45,6 +45,7 @@ app.use(morgan('dev'));
 const corsOrigins = [
     'http://localhost:8080',
     'http://192.168.0.143:8080',
+    'http://178.48.83.132:8080',
 ];
 
 app.use(cors({
