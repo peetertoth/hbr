@@ -2,6 +2,27 @@
   <b-container>
     <b-row>
       <b-col cols="12">
+        <b-alert show>
+          A nyers adatok mezőbe a következő adatok kellenek: <b>Vezetéknév</b>, <b>Keresztnév</b> és <b>NEPTUN</b>. <br>
+          Excel táblából az előbb említett három oszlop tartamára van szükség, fejléc nélkül. <br><br>
+          Pl.:<br>
+          <table>
+            <tr>
+              <td>Teszt</td>
+              <td>Ádám</td>
+              <td>ABC123</td>
+            </tr>
+            <tr>
+              <td>Teszt</td>
+              <td>Éva</td>
+              <td>DEF123</td>
+            </tr>
+          </table>
+        </b-alert>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="12">
         Nyers adatok
         <b-textarea v-model="model.rawData" rows="16" no-resize></b-textarea>
       </b-col>
@@ -27,18 +48,20 @@
       }),
     },
     mounted() {
-      this.model.rawData = this.rawData;
-      this.model.rawData = this.parsedData;
+      this.model.rawData = this.rawData || '';
+      this.model.parsedData = this.parsedData || [];
     },
     watch: {
       'model.rawData'() {
-        console.log('raw data changed', this.model.rawData.length);
+        if (this.model.rawData.length === 0) {
+          return;
+        }
         try {
           this.$store.dispatch('studentImport/loadRawData', { rawData: this.model.rawData }, { root: true });
           this.model.parsedData = this.parseRawData(this.model.rawData);
           this.$store.dispatch('studentImport/loadParsedData', { parsedData: this.model.parsedData }, { root: true });
           if (this.model.parsedData.length > 0) {
-            this.$emit('done');
+            // this.$emit('done');
           }
         } catch (e) {
           console.error(`Failed to parse raw data. Error: ${e}`);
@@ -50,7 +73,18 @@
         console.log(`got data ${data.length}`);
         let splitLines = data.split('\n');
         splitLines = splitLines.map(line => line.split('\t'));
-        return splitLines;
+        let parsed = splitLines
+          .filter(line => {
+            return line.length === 3;
+          })
+          .map(line => {
+            return {
+              firstName: line[0],
+              lastName: line[1],
+              neptun: line[2],
+            };
+          });
+        return parsed;
       }
       // model() {
       //   console.log('value changed');
