@@ -7,7 +7,8 @@
     </b-row>
     <b-row align-h="center">
       <b-col cols="12" class="mt-3">
-        <b-button variant="outline-primary" @click="createNewGroup">
+        <b-button v-b-modal.create_group_modal
+                  variant="outline-primary">
           Új csoport létrehozása
         </b-button>
       </b-col>
@@ -40,10 +41,30 @@
         </b-table>
       </b-col>
     </b-row>
+    <b-modal id="create_group_modal"
+             ref="create_group_modal"
+             title="Csoport létrehozása"
+             @show="resetCreateNewGroup"
+             @hidden="resetCreateNewGroup"
+             @ok="handleOkCreateNewGroup">
+      <form ref="create_new_group_form" @submit.stop.prevent="createNewGroup">
+        <b-form-group :state="newGroup.nameState"
+                      label="Név"
+                      label-for="name-input"
+                      :invalid-feedback="invalidFeedbackCreateNewGroup">
+          <b-form-input id="name-input"
+                        v-model="newGroup.name"
+                        :state="newGroup.nameState"
+                        required
+          ></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
   </b-container>
 </template>
 <script>
   import { mapState } from 'vuex';
+  import GroupService from '../service/group_service';
 
   export default {
     data() {
@@ -71,27 +92,78 @@
             sortable: false,
           },
         ],
+        newGroup: {
+          name: '',
+          nameState: null,
+          nameAlreadyTaken: false,
+        },
       };
     },
     computed: {
       ...mapState({
         items: state => state.group.groups,
       }),
+      invalidFeedbackCreateNewGroup() {
+        if (this.newGroup.nameAlreadyTaken === false) {
+          return 'Név kitöltése kötelező';
+        } else {
+          return 'A név már használatban van';
+        }
+      }
     },
     created() {
-      this.loadingItems = true;
-      this.$store.dispatch('group/loadGroups', null, { root: true }).then(() => {
-        setTimeout(() => {
-          this.loadingItems = false;
-        }, 1000);
-      });
+      this.setup();
     },
     methods: {
+      setup() {
+        this.loadingItems = true;
+        this.$store.dispatch('group/loadGroups', null, { root: true }).then(() => {
+          setTimeout(() => {
+            this.loadingItems = false;
+          }, 1000);
+        });
+      },
       openGroupDetails(groupId) {
         this.$router.push({ name: 'group-details', params: { id: groupId } });
       },
-      createNewGroup() {
-        console.log('TODO: open group creation page');
+      validateCreateNewGroup() {
+        const valid = this.$refs.create_new_group_form.checkValidity();
+        this.newGroup.nameState = valid;
+        return valid;
+      },
+      async createNewGroup() {
+        if (this.validateCreateNewGroup() === true) {
+          // do create
+          console.log('do create');
+          const { name } = this.newGroup;
+          try {
+            let result = await GroupService.create(name, false);
+            console.log('result', result);
+
+            this.$nextTick(() => {
+              this.$toast.success({
+                title: 'Sikeres',
+                message: 'Csoport létrehozása sikeres',
+              });
+              this.$refs.create_group_modal.hide();
+              this.setup();
+            });
+
+          } catch (e) {
+            this.newGroup.nameAlreadyTaken = true;
+          }
+        } else {
+          // INVALID
+        }
+
+      },
+      resetCreateNewGroup() {
+        this.newGroup.name = '';
+        this.newGroup.nameState = null;
+      },
+      handleOkCreateNewGroup(evt) {
+        evt.preventDefault();
+        this.createNewGroup();
       },
     },
   };

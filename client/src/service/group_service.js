@@ -15,8 +15,14 @@ const edit = async (id, name, showError = true) => {
   return res.data;
 };
 
+const create = async (name, showError = true) => {
+  const res = await HttpClient.POST('/group/create', { name }, showError);
+  return res.data;
+};
+
 export default {
   getGroups,
   getGroupById,
   edit,
+  create,
 };
