@@ -45,7 +45,7 @@
         this.$store.dispatch('common/startLoading', null, { root: true });
 
         try {
-          const response = await AuthService.loginUser(this.model);
+          await AuthService.loginUser(this.model);
 
           this.$store.dispatch('user/getCurrentUser', null, { root: true });
 

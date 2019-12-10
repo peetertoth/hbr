@@ -3,7 +3,7 @@ export default {
   state: {
     rawData: '',
     parsedData: [],
-    group: null
+    group: null,
   },
   mutations: {
     setRawData(state, payload) {

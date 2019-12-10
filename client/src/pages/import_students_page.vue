@@ -27,11 +27,10 @@
   </b-container>
 </template>
 <script>
+  import { mapState } from 'vuex';
   import Step1 from '../components/student/import_student_step_1.vue';
   import Step2 from '../components/student/import_student_step_2.vue';
   import Step3 from '../components/student/import_student_step_3.vue';
-  // import import_student_step_1 from '../components/student/import_student_step_1';
-  import { mapState } from 'vuex';
 
   export default {
     components: {
@@ -53,12 +52,12 @@
       };
     },
     methods: {
-      onStepOneDone(data) {
+      onStepOneDone() {
         this.step = 2;
       },
     },
     created() {
       this.$store.dispatch('group/loadGroups', null, { root: true }).then();
-    }
+    },
   };
 </script>

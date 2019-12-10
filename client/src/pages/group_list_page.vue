@@ -106,10 +106,9 @@
       invalidFeedbackCreateNewGroup() {
         if (this.newGroup.nameAlreadyTaken === false) {
           return 'Név kitöltése kötelező';
-        } else {
-          return 'A név már használatban van';
         }
-      }
+        return 'A név már használatban van';
+      },
     },
     created() {
       this.setup();
@@ -135,7 +134,7 @@
         if (this.validateCreateNewGroup() === true) {
           const { name } = this.newGroup;
           try {
-            let result = await GroupService.create(name, false);
+            await GroupService.create(name, false);
 
             this.$nextTick(() => {
               this.$toast.success({
@@ -145,7 +144,6 @@
               this.$refs.create_group_modal.hide();
               this.setup();
             });
-
           } catch (e) {
             this.newGroup.nameAlreadyTaken = true;
           }

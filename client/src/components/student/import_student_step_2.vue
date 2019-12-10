@@ -29,8 +29,8 @@
           {
             key: 'neptun',
             label: 'NEPTUN',
-          }
-        ]
+          },
+        ],
       };
     },
     computed: {
@@ -39,11 +39,11 @@
         parsedData: state => state.studentImport.parsedData,
       }),
       rawDataLines() {
-        let rawCount = this.rawData.split('\n').length;
-        let res = rawCount - this.parsedData.length;
+        const rawCount = this.rawData.split('\n').length;
+        const res = rawCount - this.parsedData.length;
 
         return res < 0 ? 0 : res;
-      }
-    }
+      },
+    },
   };
 </script>

@@ -3,8 +3,10 @@
     <b-row>
       <b-col cols="12">
         <b-alert show variant="info">
-          A nyers adatok mezőbe a következő adatok kellenek: <b>Vezetéknév</b>, <b>Keresztnév</b> és <b>NEPTUN</b>. <br>
-          Excel táblából az előbb említett három oszlop tartamára van szükség, fejléc nélkül. <br><br>
+          A nyers adatok mezőbe a következő adatok kellenek: <b>Vezetéknév</b>,
+          <b>Keresztnév</b> és <b>NEPTUN</b>. <br>
+          Excel táblából az előbb említett három oszlop tartamára van szükség, fejléc nélkül.
+          <br><br>
           Pl.:<br>
           <table>
             <tr>
@@ -19,7 +21,8 @@
             </tr>
           </table>
           <br>
-          Beillesztést követően a <strong>2. Feldolgozás</strong> pontra kattintva látható a feldolgozás eredménye.
+          Beillesztést követően a <strong>2. Feldolgozás</strong> pontra kattintva látható a
+          feldolgozás eredménye.
         </b-alert>
       </b-col>
     </b-row>
@@ -54,20 +57,22 @@
       this.model.parsedData = this.parsedData || [];
     },
     watch: {
-      'model.rawData'() {
-        if (this.model.rawData.length === 0) {
-          return;
-        }
-        try {
-          this.$store.dispatch('studentImport/loadRawData', { rawData: this.model.rawData }, { root: true });
-          this.model.parsedData = this.parseRawData(this.model.rawData);
-          this.$store.dispatch('studentImport/loadParsedData', { parsedData: this.model.parsedData }, { root: true });
-          if (this.model.parsedData.length > 0) {
-            // this.$emit('done');
+      'model.rawData': {
+        handler() {
+          if (this.model.rawData.length === 0) {
+            return;
           }
-        } catch (e) {
-          console.error(`Failed to parse raw data. Error: ${e}`);
-        }
+          try {
+            this.$store.dispatch('studentImport/loadRawData', { rawData: this.model.rawData }, { root: true });
+            this.model.parsedData = this.parseRawData(this.model.rawData);
+            this.$store.dispatch('studentImport/loadParsedData', { parsedData: this.model.parsedData }, { root: true });
+            if (this.model.parsedData.length > 0) {
+              // this.$emit('done');
+            }
+          } catch (e) {
+            console.error(`Failed to parse raw data. Error: ${e}`);
+          }
+        },
       },
     },
     methods: {
@@ -75,23 +80,11 @@
         console.log(`got data ${data.length}`);
         let splitLines = data.split('\n');
         splitLines = splitLines.map(line => line.split('\t'));
-        let parsed = splitLines
-          .filter(line => {
-            return line.length === 3;
-          })
-          .map(line => {
-            return {
-              firstName: line[0],
-              lastName: line[1],
-              neptun: line[2],
-            };
-          });
+        const parsed = splitLines
+          .filter(line => line.length === 3)
+          .map(line => ({ firstName: line[0], lastName: line[1], neptun: line[2] }));
         return parsed;
-      }
-      // model() {
-      //   console.log('value changed');
-      //   this.$emit('input', this.value);
-      // },
+      },
     },
   };
 </script>

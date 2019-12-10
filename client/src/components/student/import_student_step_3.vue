@@ -2,18 +2,22 @@
   <div>
     <b-alert show variant="info">
       Amennyiben új csoporthoz szeretnéd hozzáadni a hallgatókat, nyisd meg a
-      <b-badge>Csoportok</b-badge> menüpontot, majd kattints az <b-badge>Új csoport létrehozása</b-badge> gombra.
+      <b-badge>Csoportok</b-badge> menüpontot, majd kattints az
+      <b-badge>Új csoport létrehozása</b-badge> gombra.
       <br>
       Jelenlegi állapot az oldal újratöltéséig megmarad.
     </b-alert>
     <b-form @submit.prevent="importStudents">
       <b-form-group label="Csoport">
         <template v-for="group in groups">
-          <b-form-radio v-model="model.selectedGroup" name="Csoport" :value="group" class="ml-2">{{ group.name }}</b-form-radio>
+          <b-form-radio v-model="model.selectedGroup"
+                        v-bind:key="group" name="Csoport" :value="group" class="ml-2">
+            {{ group.name }}</b-form-radio>
         </template>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" :disabled="!model.selectedGroup">Adatok rögzítése</b-button>
+      <b-button type="submit" variant="primary" :disabled="!model.selectedGroup">
+        Adatok rögzítése</b-button>
     </b-form>
 
   </div>
@@ -27,7 +31,7 @@
       return {
         model: {
           selectedGroup: null,
-        }
+        },
       };
     },
     computed: {
@@ -43,23 +47,26 @@
       this.model.selectedGroup = this.group || null;
     },
     watch: {
-      'model.selectedGroup'() {
-        this.$store.dispatch('studentImport/loadGroup', { group: this.model.selectedGroup }, { root: true });
-      }
+      'model.selectedGroup': {
+        handler() {
+          this.$store.dispatch('studentImport/loadGroup', { group: this.model.selectedGroup }, { root: true });
+        },
+      },
     },
     methods: {
       importStudents() {
+        /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
         const data = {
           students: this.parsedData,
           groupId: this.group._id,
         };
-        studentService.importStudents(data).then(result => {
+        studentService.importStudents(data).then(() => {
           this.$toast.success({
             title: 'Sikeres',
             message: 'Bejelentkezés sikeres',
           });
         });
       },
-    }
+    },
   };
 </script>
