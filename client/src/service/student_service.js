@@ -10,7 +10,13 @@ const getStudentById = async (id, showError = true) => {
   return res.data;
 };
 
+const importStudents = async ({students, groupId} , showError = true) => {
+  const res = await HttpClient.POST(`/student/import`, {students, groupId}, showError);
+  return res.data;
+};
+
 export default {
   getStudents,
   getStudentById,
+  importStudents,
 };

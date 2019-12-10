@@ -3,6 +3,7 @@ export default {
   state: {
     rawData: '',
     parsedData: [],
+    group: null
   },
   mutations: {
     setRawData(state, payload) {
@@ -13,6 +14,10 @@ export default {
       const { parsedData } = payload;
       state.parsedData = parsedData;
     },
+    setGroup(state, payload) {
+      const { group } = payload;
+      state.group = group;
+    },
   },
   actions: {
     loadRawData({ commit }, { rawData }) {
@@ -20,6 +25,9 @@ export default {
     },
     loadParsedData({ commit }, { parsedData }) {
       commit({ type: 'setParsedData', parsedData });
+    },
+    loadGroup({ commit }, { group }) {
+      commit({ type: 'setGroup', group });
     },
   },
 };

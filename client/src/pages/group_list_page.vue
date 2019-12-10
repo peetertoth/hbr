@@ -133,12 +133,9 @@
       },
       async createNewGroup() {
         if (this.validateCreateNewGroup() === true) {
-          // do create
-          console.log('do create');
           const { name } = this.newGroup;
           try {
             let result = await GroupService.create(name, false);
-            console.log('result', result);
 
             this.$nextTick(() => {
               this.$toast.success({
@@ -155,7 +152,6 @@
         } else {
           // INVALID
         }
-
       },
       resetCreateNewGroup() {
         this.newGroup.name = '';

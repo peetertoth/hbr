@@ -56,6 +56,9 @@
       onStepOneDone(data) {
         this.step = 2;
       },
+    },
+    created() {
+      this.$store.dispatch('group/loadGroups', null, { root: true }).then();
     }
   };
 </script>

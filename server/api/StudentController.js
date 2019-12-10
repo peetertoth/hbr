@@ -72,4 +72,18 @@ router.post('/assign_to_group', async (req, res, next) => {
     }
 });
 
+// Import (create students and assign to group)
+router.post('/import', async (req, res, next) => {
+    if (validator.validateRequestParam(['students', 'groupId'], req.body, next)) {
+        return;
+    }
+
+    try {
+        const result = await studentGroupService.importStudentsAndAssignToGroup(req.body);
+        res.status(200).send(result);
+    } catch (err) {
+        next(err);
+    }
+});
+
 module.exports = router;

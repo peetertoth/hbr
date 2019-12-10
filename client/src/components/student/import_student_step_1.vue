@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col cols="12">
-        <b-alert show>
+        <b-alert show variant="info">
           A nyers adatok mezőbe a következő adatok kellenek: <b>Vezetéknév</b>, <b>Keresztnév</b> és <b>NEPTUN</b>. <br>
           Excel táblából az előbb említett három oszlop tartamára van szükség, fejléc nélkül. <br><br>
           Pl.:<br>
@@ -18,6 +18,8 @@
               <td>DEF123</td>
             </tr>
           </table>
+          <br>
+          Beillesztést követően a <strong>2. Feldolgozás</strong> pontra kattintva látható a feldolgozás eredménye.
         </b-alert>
       </b-col>
     </b-row>

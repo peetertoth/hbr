@@ -44,6 +44,22 @@ const create = async ({ firstName, lastName, neptun }) => {
   return await student(aStudent).save();
 };
 
+const createOrGet = async ({ firstName, lastName, neptun }) => {
+  let existing = await student.findOne({ neptun: neptun });
+  if (existing) {
+    return existing;
+  }
+
+  let aStudent = {
+    firstName,
+    lastName,
+    neptun,
+    fullName: lastName + ' ' + firstName
+  };
+
+  return await student(aStudent).save();
+};
+
 const getByIdList = async (idList) => {
   const listOfStudents = await student.find({ _id: { $in: idList } });
   return listOfStudents;
@@ -54,5 +70,6 @@ module.exports = {
   getById,
   getByNeptun,
   create,
+  createOrGet,
   getByIdList
 };

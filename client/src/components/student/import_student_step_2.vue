@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h3 class="mt-1">Sikeresen feldolgozott sorok</h3>
+    <b-alert show variant="success">
+      Feldolgozott sorok száma: {{ parsedData.length }}
+    </b-alert>
+    <b-alert show variant="danger" v-if="rawDataLines > 0">
+      Sikertelenül feldolgozott sorok száma: {{ rawDataLines }}
+    </b-alert>
     <b-table striped hover :items="parsedData" :fields="fields"></b-table>
   </div>
 </template>
@@ -33,6 +38,12 @@
         rawData: state => state.studentImport.rawData,
         parsedData: state => state.studentImport.parsedData,
       }),
+      rawDataLines() {
+        let rawCount = this.rawData.split('\n').length;
+        let res = rawCount - this.parsedData.length;
+
+        return res < 0 ? 0 : res;
+      }
     }
   };
 </script>

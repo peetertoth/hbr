@@ -7,9 +7,9 @@
     </b-row>
     <b-row align-h="center">
       <b-col cols="12" class="mt-3">
-        <b-button variant="outline-primary" @click="createNewStudent">
-          Új hallgató felvétele
-        </b-button>
+<!--        <b-button variant="outline-primary" @click="createNewStudent">-->
+<!--          Új hallgató felvétele-->
+<!--        </b-button>-->
         <b-button class="ml-2" variant="outline-primary" @click="importStudents">
           Hallgatók felvétele
         </b-button>
