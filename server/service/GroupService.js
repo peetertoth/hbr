@@ -4,9 +4,9 @@ const get = async () => {
   return await group.find({}).exec();
 };
 
-const getById = async ({ id }) => {
+const getById = async ({ id }, full = true) => {
   let aGroup = await group.findOne({ _id: id }).exec();
-  if (aGroup) {
+  if (aGroup && full) {
     const studentGroupService = require('./StudentGroupService');
     const studentService = require('./StudentService');
 

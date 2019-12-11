@@ -6,8 +6,12 @@ const router = express.Router();
 
 router.post('/register', async (req, res) => {
     try {
-        const user = await service.create(req.body);
-        res.status(200).send(user);
+        /**
+          * Registration disabled
+          */
+        // const user = await service.create(req.body);
+        // res.status(200).send(user);
+        res.status(200).send();
     } catch (err) {
         console.error(`Error during register user: ${err}`, err);
         res.status(500).send(err);

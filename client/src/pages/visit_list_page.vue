@@ -31,7 +31,7 @@
           </template>
 
           <template v-slot:cell(actions)="data">
-            <b-button variant="outline-info" @click="openStudentDetails(data.item._id)">
+            <b-button variant="outline-info" @click="openVisitDetails(data.item._id)">
               Részletek
             </b-button>
           </template>
@@ -119,10 +119,17 @@
             key: 'startTime',
             label: 'Kezdete',
             sortable: true,
+            formatter: a => new Date(a).toLocaleString(),
           },
           {
             key: 'endTime',
             label: 'Vége',
+            sortable: false,
+            formatter: a => new Date(a).toLocaleString(),
+          },
+          {
+            key: 'actions',
+            label: 'Műveletek',
             sortable: false,
           },
         ],
@@ -217,6 +224,9 @@
         evt.preventDefault();
         this.createNewVisit();
       },
+      openVisitDetails(id) {
+        this.$router.push({ name: 'visit-details', params: { id } });
+      }
     },
   };
 </script>

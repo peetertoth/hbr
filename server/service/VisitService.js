@@ -13,7 +13,7 @@ const create = async ({name, groupId, startTime, endTime}) => {
 const getGroupNameById = async ({ id }) => {
   const groupService = require('./GroupService.js');
 
-  const group = await groupService.getById({ id });
+  const group = await groupService.getById({ id }, false);
 
   return group.name;
 };
@@ -28,9 +28,27 @@ const get = async () => {
 };
 
 const getById = async ({ id }) => {
-  const aVisit = await visit.findOne({ _id: id }).exec();
+  let aVisit = await visit.findOne({ _id: id }).exec();
   if (aVisit) {
-    aVisit.groupName = await getGroupNameById({ id: aVisit.groupId });
+    let groupName = await getGroupNameById({ id: aVisit.groupId });
+
+    const studentVisitService = require('./StudentVisitService');
+    const studentService = require('./StudentService');
+
+    const visitStudents = await studentVisitService.getVisitStudents(aVisit);
+    const studentIds = visitStudents.map(({ studentId }) => studentId);
+    const students = await studentService.getByIdList(studentIds);
+
+    for (let i = 0; i < students.length; i++) {
+      for (let j = 0; j < visitStudents.length; j++) {
+        if (students[i]._id.toString() === visitStudents[j].studentId) {
+          students[i] = { ...students[i].toObject(), ...visitStudents[j].toObject() };
+          break;
+        }
+      }
+    }
+
+    aVisit = { ...aVisit.toObject(), groupName, students };
   }
   return aVisit;
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const studentService = require('../service/StudentService');
 const studentGroupService = require('../service/StudentGroupService');
+const authService = require('../service/AuthService');
 
 const validator = require('./validator/Validator');
 const ValidationError = require('../model/error/ValidationError');
@@ -10,13 +11,13 @@ const router = express.Router();
 const entityType = 'Student';
 
 // Get
-router.get('/students', async (req, res) => {
+router.get('/students', authService.authenticationRequired, async (req, res) => {
     let students = await studentService.get();
     res.send(students);
 });
 
 // Get by id
-router.get('/id/:id', async (req, res, next) => {
+router.get('/id/:id', authService.authenticationRequired, async (req, res, next) => {
     if (validator.validateRequestParam(['id'], req.params, next)) {
         return;
     }
@@ -39,7 +40,7 @@ router.get('/id/:id', async (req, res, next) => {
 });
 
 // Create
-router.post('/', async (req, res, next) => {
+router.post('/', authService.authenticationRequired, async (req, res, next) => {
     if (validator.validateRequestParam(['firstName', 'lastName', 'neptun'], req.body, next)) {
         return;
     }
@@ -59,7 +60,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // Assign to group
-router.post('/assign_to_group', async (req, res, next) => {
+router.post('/assign_to_group', authService.authenticationRequired, async (req, res, next) => {
     if (validator.validateRequestParam(['studentId', 'groupId'], req.body, next)) {
         return;
     }
@@ -73,7 +74,7 @@ router.post('/assign_to_group', async (req, res, next) => {
 });
 
 // Import (create students and assign to group)
-router.post('/import', async (req, res, next) => {
+router.post('/import', authService.authenticationRequired, async (req, res, next) => {
     if (validator.validateRequestParam(['students', 'groupId'], req.body, next)) {
         return;
     }

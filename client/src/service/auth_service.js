@@ -1,7 +1,7 @@
 import HttpClient from './base_http_client';
 
 const getUser = async () => {
-  const res = await HttpClient.GET('/user/current');
+  const res = await HttpClient.GET('/user/current', false);
   return res.data;
 };
 

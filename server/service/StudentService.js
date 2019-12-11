@@ -31,7 +31,11 @@ const getById = async ({ id }) => {
 };
 
 const getByNeptun = async ({ neptun }) => {
-  return await student.findOne({ neptun });
+  const entity = await student.findOne({ neptun });
+  if (entity) {
+    return getById({ id: entity.id });
+  }
+  return entity;
 };
 
 const create = async ({ firstName, lastName, neptun }) => {

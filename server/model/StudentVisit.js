@@ -9,6 +9,14 @@ const StudentVisitSchema = mongoose.Schema(
     visitId: {
       type: String,
       required: true,
+    },
+    foundAt: {
+      type: Date,
+      required: false,
+    },
+    calledAt: {
+      type: Date,
+      required: false,
     }
   },
   {

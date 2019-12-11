@@ -10,6 +10,8 @@ import StudentListPage from './pages/student_list_page.vue';
 import StudentDetailsPage from './pages/student_details_page.vue';
 import ImportStudentsPage from './pages/import_students_page.vue';
 import VisitListPage from './pages/visit_list_page.vue';
+import VisitDetailsPage from './pages/visit_details_page.vue';
+import VisitLoginPage from './pages/visit_login_page';
 
 import store from './store';
 
@@ -92,6 +94,19 @@ const router = new Router({
       meta: {
         authRequired: true,
       },
+    },
+    {
+      path: '/visit/:id',
+      name: 'visit-details',
+      component: VisitDetailsPage,
+      meta: {
+        authRequired: true,
+      },
+    },
+    {
+      path: '/visit/login/:id',
+      name: 'visit-login',
+      component: VisitLoginPage,
     },
   ],
 });

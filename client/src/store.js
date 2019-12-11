@@ -9,6 +9,7 @@ import StudentListModule from './store_modules/student_list_module';
 import StudentDetailsModule from './store_modules/student_details_module';
 import StudentImportModule from './store_modules/student_import_module';
 import VisitListModule from './store_modules/visit_list_module';
+import VisitDetailsModule from './store_modules/visit_details_module';
 
 Vue.use(Vuex);
 
@@ -22,5 +23,6 @@ export default new Vuex.Store({
     studentDetails: StudentDetailsModule,
     studentImport: StudentImportModule,
     visit: VisitListModule,
+    visitDetails: VisitDetailsModule,
   },
 });
