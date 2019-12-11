@@ -23,6 +23,8 @@
                  :items="items"
                  :fields="tableFields"
                  :busy="loadingItems"
+                 emptyText="Nem található megtekintési alkalom"
+                 show-empty
         >
           <template v-slot:table-busy>
             <div class="text-center text-danger my-2">

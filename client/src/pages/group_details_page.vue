@@ -25,6 +25,8 @@
                  :items="group.students"
                  :fields="tableFields"
                  :busy="loadingItems"
+                 emptyText="Nem található hallgató"
+                 show-empty
         >
           <template v-slot:table-busy>
             <div class="text-center text-danger my-2">
@@ -33,7 +35,7 @@
           </template>
 
           <template v-slot:cell(actions)="data">
-            <b-button variant="outline-info" @click="openUserDetails(data.item._id)">
+            <b-button variant="outline-info" @click="openStudentDetails(data.item.studentId)">
               Részletek
             </b-button>
           </template>
@@ -99,12 +101,8 @@
           });
         });
       },
-      openUserDetails(id) {
-        console.warn('TODO: implement openUserDetails');
-        this.$toast.warn({
-          title: 'Warn',
-          message: 'TODO: implement openUserDetails',
-        });
+      openStudentDetails(studentId) {
+        this.$router.push({ name: 'student-details', params: { id: studentId } });
       },
     },
   };

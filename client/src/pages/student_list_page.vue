@@ -7,9 +7,6 @@
     </b-row>
     <b-row align-h="center">
       <b-col cols="12" class="mt-3">
-<!--        <b-button variant="outline-primary" @click="createNewStudent">-->
-<!--          Új hallgató felvétele-->
-<!--        </b-button>-->
         <b-button class="ml-2" variant="outline-primary" @click="importStudents">
           Hallgatók felvétele
         </b-button>
@@ -22,12 +19,14 @@
                  :items="items"
                  :fields="tableFields"
                  :busy="loadingItems"
-        >
+                 emptyText="Nem található hallgató"
+                 show-empty>
           <template v-slot:table-busy>
             <div class="text-center text-danger my-2">
               <b-spinner big type="grow" label="Spinning"></b-spinner>
             </div>
           </template>
+
 
           <template v-slot:cell(actions)="data">
             <b-button variant="outline-info" @click="openStudentDetails(data.item._id)">

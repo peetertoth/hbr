@@ -40,6 +40,8 @@
         <b-table stacked="sm" simple hover head-variant="light"
                  :items="student.groups"
                  :fields="tableFields"
+                 emptyText="Nem található csoport"
+                 show-empty
         >
           <template v-slot:table-busy>
             <div class="text-center text-danger my-2">
@@ -48,7 +50,7 @@
           </template>
 
           <template v-slot:cell(actions)="data">
-            <b-button variant="outline-info" @click="openUserDetails(data.item._id)">
+            <b-button variant="outline-info" @click="openGroupDetails(data.item._id)">
               Részletek
             </b-button>
           </template>
@@ -98,12 +100,8 @@
       });
     },
     methods: {
-      openUserDetails(id) {
-        console.warn('TODO: implement openUserDetails');
-        this.$toast.warn({
-          title: 'Warn',
-          message: 'TODO: implement openUserDetails',
-        });
+      openGroupDetails(groupId) {
+        this.$router.push({ name: 'group-details', params: { id: groupId } });
       },
     },
   };
