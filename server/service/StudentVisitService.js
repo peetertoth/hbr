@@ -11,6 +11,11 @@ const create = async ({ neptun, visitId }) => {
   let student = await studentService.getByNeptun({ neptun });
   let visit = await visitService.getById({ id: visitId });
 
+  const now = new Date().getTime();
+  if (visit.startTime.getTime() > now || visit.endTime.getTime() < now) {
+    throw new Error('Jelenleg erre a megtekintésre nem lehet jelentkezni!');
+  }
+
   if (!student) {
     throw new Error(`Hallgató nem található: ${neptun}`);
   }
