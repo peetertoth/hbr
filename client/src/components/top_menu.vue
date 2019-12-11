@@ -2,7 +2,10 @@
   <b-navbar id="top-menu" toggleable="md" type="dark" variant="dark" sticky>
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-    <b-navbar-brand href="#" class="mr-xl-5" @click="navigateTo('home')">HBR</b-navbar-brand>
+    <b-navbar-brand href="#" class="mr-xl-5" @click="navigateTo('home')">
+      <img alt="logo" src="../assets/logo.png" class="top-menu-logo">
+      HBR
+    </b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
 
@@ -37,6 +40,11 @@
 <style>
   #top-menu {
     text-align: center;
+    max-height: 56px;
+  }
+  .top-menu-logo {
+    max-height: 100px;
+    overflow-y: hidden;
   }
 </style>
 <script>

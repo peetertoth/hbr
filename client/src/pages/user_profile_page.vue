@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h1>User details</h1>
-    <p>Name: {{ user.name }} </p>
+  <b-container>
+    <h1>Bejelentkezett felhasználó adatai</h1>
+    <p>Név: {{ user.name }} </p>
     <p>Email: {{ user.email }} </p>
-  </div>
+  </b-container>
 </template>
 <script>
   import { mapState } from 'vuex';
