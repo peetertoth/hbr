@@ -9,6 +9,7 @@ import GroupDetailsPage from './pages/group_details_page.vue';
 import StudentListPage from './pages/student_list_page.vue';
 import StudentDetailsPage from './pages/student_details_page.vue';
 import ImportStudentsPage from './pages/import_students_page.vue';
+import VisitListPage from './pages/visit_list_page.vue';
 
 import store from './store';
 
@@ -80,6 +81,14 @@ const router = new Router({
       path: '/import-students',
       name: 'import-students',
       component: ImportStudentsPage,
+      meta: {
+        authRequired: true,
+      },
+    },
+    {
+      path: '/visit',
+      name: 'visit',
+      component: VisitListPage,
       meta: {
         authRequired: true,
       },

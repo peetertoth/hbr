@@ -87,6 +87,9 @@ app.use('/api/group', group);
 const auth = require('./api/UserController');
 app.use('/api/user', auth);
 
+const visit = require('./api/VisitController');
+app.use('/api/visit', visit);
+
 // Endpoints**
 
 // Error handling
