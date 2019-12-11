@@ -48,10 +48,8 @@
         <b-form-group :state="newVisit.nameState"
                       label="Név"
                       label-for="name-input"
-                      name="name-input"
                       invalid-feedback="Név megadása kötelező">
           <b-form-input id="name-input"
-                        name="name-input"
                         v-model="newVisit.name"
                         :state="newVisit.nameState"
                         required
@@ -60,10 +58,8 @@
         <b-form-group :state="newVisit.groupIdState"
                       label="Csoport"
                       label-for="group-id-input"
-                      name="group-id-input"
                       invalid-feedback="Csoport megadása kötelező">
           <b-form-select id="group-id-input"
-                         name="group-id-input"
                          :state="newVisit.groupIdState"
                          v-model="newVisit.groupId"
                          required>
@@ -73,19 +69,21 @@
           </b-form-select>
         </b-form-group>
 
-        <b-form-input id="start-input"
-                      name="start-input"
-                      v-model="newVisit.startTime"
-                      :state="newVisit.startTimeState"
-                      required
-        ></b-form-input>
+        <b-form-group :state="newVisit.startTimeState"
+                      label="Kezdete"
+                      label-for="start-time-input"
+                      invalid-feedback="Kezdő időpont megadása kötelező">
+          <date-picker class="dtpicker"
+                       v-model="newVisit.startTime" :config="options"></date-picker>
+        </b-form-group>
 
-        <b-form-input id="stop-input"
-                      name="stop-input"
-                      v-model="newVisit.endTime"
-                      :state="newVisit.endTimeState"
-                      required
-        ></b-form-input>
+        <b-form-group :state="newVisit.endTimeState"
+                      label="Vége"
+                      label-for="end-time-input"
+                      invalid-feedback="Vége időpont megadása kötelező">
+          <date-picker class="dtpicker"
+                       v-model="newVisit.endTime" :config="options"></date-picker>
+        </b-form-group>
       </form>
     </b-modal>
   </b-container>
@@ -93,12 +91,17 @@
 <script>
   import { mapState } from 'vuex';
   import VisitService from '../service/visit_service';
+  import datePicker from 'vue-bootstrap-datetimepicker';
 
   export default {
+    components: {
+      datePicker,
+    },
     data() {
       return {
-        modal: {
-          text: '',
+        options: {
+          format: 'YYYY-MM-DD HH:mm',
+          useCurrent: false,
         },
         loadingItems: false,
         tableFields: [
@@ -112,25 +115,25 @@
             label: 'Csoport',
             sortable: false,
           },
-          // {
-          //   key: 'createdAt',
-          //   label: 'Hozzáadva',
-          //   sortable: true,
-          // },
-          // {
-          //   key: 'actions',
-          //   label: 'Műveletek',
-          //   sortable: false,
-          // },
+          {
+            key: 'startTime',
+            label: 'Kezdete',
+            sortable: true,
+          },
+          {
+            key: 'endTime',
+            label: 'Vége',
+            sortable: false,
+          },
         ],
         newVisit: {
           name: '',
           nameState: null,
           groupId: null,
           groupIdState: null,
-          startTime: null,
+          startTime: '',
           startTimeState: null,
-          endTime: null,
+          endTime: '',
           endTimeState: null,
         },
       };
@@ -140,6 +143,9 @@
         items: state => state.visit.visits,
         groups: state => state.group.groups,
       }),
+      startTime() {
+        return new Date(this.newVisit.startTime);
+      },
     },
     created() {
       this.setup();
@@ -161,7 +167,13 @@
         const valid = this.$refs.create_new_visit_form.checkValidity();
         this.newVisit.nameState = !!this.newVisit.name;
         this.newVisit.groupIdState = !!this.newVisit.groupId;
-        return valid;
+        this.newVisit.startTimeState = !!this.newVisit.startTime;
+        this.newVisit.endTimeState = !!this.newVisit.endTime;
+        return valid
+          && this.newVisit.nameState
+          && this.newVisit.groupIdState
+          && this.newVisit.startTimeState
+          && this.newVisit.endTimeState;
       },
       async createNewVisit() {
         if (this.validateCreateNewVisit() === true) {
@@ -170,13 +182,16 @@
           } = this.newVisit;
           try {
             await VisitService.create({
-              name, groupId, startTime, endTime,
+              name,
+              groupId,
+              startTime,
+              endTime,
             }, false);
 
             this.$nextTick(() => {
               this.$toast.success({
                 title: 'Sikeres',
-                message: 'Megtekintés létrehozása sikeres',
+                message: 'Megtekintési alkalom létrehozása sikeres',
               });
               this.$refs.create_visit_modal.hide();
               this.setup();
@@ -193,9 +208,9 @@
         this.newVisit.nameState = null;
         this.newVisit.groupId = null;
         this.newVisit.groupIdState = null;
-        this.newVisit.startTime = null;
+        this.newVisit.startTime = '';
         this.newVisit.startTimeState = null;
-        this.newVisit.endTime = null;
+        this.newVisit.endTime = '';
         this.newVisit.endTimeState = null;
       },
       handleOkCreateNewVisit(evt) {

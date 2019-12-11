@@ -1,0 +1,4 @@
+.form-group.is-invalid input.dtpicker.form-control {
+    border-color: #dc3545;
+    padding-right: calc((1em + 0.75rem) * 3 / 4 + 1.75rem);
+}
