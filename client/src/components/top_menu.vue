@@ -3,7 +3,7 @@
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
     <b-navbar-brand href="#" class="mr-xl-5" @click="navigateTo('home')">
-      <img alt="logo" src="../assets/logo.png" class="top-menu-logo">
+<!--      <img alt="logo" src="../assets/logo.png" class="top-menu-logo">-->
       HBR
     </b-navbar-brand>
 
