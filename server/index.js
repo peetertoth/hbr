@@ -16,8 +16,7 @@ const app = express();
 
 // Init mongodb connection
 console.info(`Initialize mongodb connection to ${config.ENV.MONGODB_URL} ...`);
-const mongodbConnect = `mongodb://${config.ENV.MONGODB_URL}:${config.ENV.MONGODB_PRT}/${config.ENV.MONGODB_DBN}?authSource=admin`;
-console.log('aaaa', mongodbConnect);
+const mongodbConnect = `mongodb://${config.ENV.MONGODB_URL}:${config.ENV.MONGODB_PRT}/${config.ENV.MONGODB_DBN}`;
 mongoose.connect(mongodbConnect, {
     user: config.ENV.MONGODB_USR,
     pass: config.ENV.MONGODB_PWD,
