@@ -42,7 +42,12 @@ const getById = async ({ id }) => {
     for (let i = 0; i < students.length; i++) {
       for (let j = 0; j < visitStudents.length; j++) {
         if (students[i]._id.toString() === visitStudents[j].studentId) {
-          students[i] = { ...students[i].toObject(), ...visitStudents[j].toObject() };
+          students[i] = {
+            ...students[i].toObject(),
+            ...visitStudents[j].toObject(),
+            foundAt: visitStudents.foundAt || null,
+            calledAt: visitStudents.calledAt || null,
+          };
           break;
         }
       }

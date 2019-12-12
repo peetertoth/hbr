@@ -1,11 +1,28 @@
 <template>
   <b-container v-if="initialized">
-    <h1 class="mb-5"> <i>{{ visit.name }}</i> megtekintés adatai</h1>
+    <h1 class="mb-3"> <i>{{ visit.name }}</i> megtekintés adatai</h1>
 
+    <b-row class="mb-2">
+      <b-col cols="12">
+        Megtekintés publikus elérése hallgatók számára:
+        <a target="_blank" :href="'/visit/login/' + visit._id">Link</a>
+      </b-col>
+    </b-row>
     <b-row class="mb-3">
       <b-col cols="12">
-        Megtekintés publikus elérése:
-        <a target="_blank" :href="'/visit/login/' + visit._id">{{ visit._id }}</a>
+        Csoport:
+        <router-link :to="{ name: 'group-details', params: { id: visit.groupId } }">
+          {{ visit.groupName }}
+        </router-link>
+      </b-col>
+    </b-row>
+    <b-row class="mb-3">
+      <b-col cols="12">
+        Aktív időszak: {{ new Date(visit.startTime).toLocaleString() }} -
+        {{ new Date(visit.endTime).toLocaleString() }}
+        <b-badge :variant="active ? 'success' : 'light'">
+          {{ active ? 'Aktív' : 'Inaktív' }}
+        </b-badge>
       </b-col>
     </b-row>
 
@@ -75,13 +92,13 @@
             key: 'foundAt',
             label: 'Kikeresve',
             sortable: true,
-            formatter: date => date ? new Date(date).toLocaleString() : '',
+            formatter: date => (date ? new Date(date).toLocaleString() : ''),
           },
           {
             key: 'calledAt',
             label: 'Szólítva',
             sortable: true,
-            formatter: date => date ? new Date(date).toLocaleString() : '',
+            formatter: date => (date ? new Date(date).toLocaleString() : ''),
           },
           {
             key: 'actions',
@@ -102,6 +119,15 @@
         }
         return this.visit.students;
       },
+      active() {
+        const start = new Date(this.visit.startTime).getTime();
+        const end = new Date(this.visit.endTime).getTime();
+        const now = new Date().getTime();
+        if (start > now || now > end) {
+          return false;
+        }
+        return true;
+      },
     },
     created() {
       this.$store.dispatch('visitDetails/loadVisit', { id: this.$route.params.id }, { root: true }).then(() => {
@@ -117,7 +143,8 @@
           foundAt = new Date();
         }
         VisitService.setFound({ visitId, studentId, foundAt }).then(() => {
-          item.foundAt = foundAt;
+          const index = this.visit.students.indexOf(item);
+          this.visit.students[index].foundAt = foundAt;
         });
       },
       markAsCalled(item) {
@@ -128,7 +155,8 @@
           calledAt = new Date();
         }
         VisitService.setCalled({ visitId, studentId, calledAt }).then(() => {
-          item.calledAt = calledAt;
+          const index = this.visit.students.indexOf(item);
+          this.visit.students[index].calledAt = calledAt;
         });
       },
     },

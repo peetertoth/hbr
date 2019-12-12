@@ -23,6 +23,8 @@ const create = async ({ neptun, visitId }) => {
   let futureEntity = {
     studentId: student._id,
     visitId,
+    foundAt: '',
+    calledAt: '',
   };
 
   // Check existing
