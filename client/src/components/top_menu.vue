@@ -2,9 +2,8 @@
   <b-navbar id="top-menu" toggleable="md" type="dark" variant="dark" sticky>
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-    <b-navbar-brand href="#" class="mr-xl-5" @click="navigateTo('home')">
-<!--      <img alt="logo" src="../assets/logo.png" class="top-menu-logo">-->
-      HBR
+    <b-navbar-brand href="#" class="mr-xl-5 logo" @click="navigateTo('home')">
+      <img alt="logo" src="../assets/logo.png" class="top-menu-logo">
     </b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
@@ -37,12 +36,17 @@
     </b-collapse>
   </b-navbar>
 </template>
-<style>
+<style scoped>
   #top-menu {
+    text-align: center;
+  }
+
+  .logo {
     text-align: center;
     max-height: 56px;
   }
   .top-menu-logo {
+    margin-top: -1.5rem;
     max-height: 100px;
     overflow-y: hidden;
   }
