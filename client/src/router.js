@@ -11,7 +11,7 @@ import StudentDetailsPage from './pages/student_details_page.vue';
 import ImportStudentsPage from './pages/import_students_page.vue';
 import VisitListPage from './pages/visit_list_page.vue';
 import VisitDetailsPage from './pages/visit_details_page.vue';
-import VisitLoginPage from './pages/visit_login_page';
+import VisitLoginPage from './pages/visit_login_page.vue';
 
 import store from './store';
 

@@ -5,7 +5,7 @@
     <b-row class="mb-3">
       <b-col cols="12">
         Megtekintés publikus elérése:
-        <a target="_blank" :href="'/visit/login/' + visit._id">visit._id</a>
+        <a target="_blank" :href="'/visit/login/' + visit._id">{{ visit._id }}</a>
       </b-col>
     </b-row>
 
@@ -101,7 +101,7 @@
           return this.visit.students.filter(e => !e.calledAt);
         }
         return this.visit.students;
-      }
+      },
     },
     created() {
       this.$store.dispatch('visitDetails/loadVisit', { id: this.$route.params.id }, { root: true }).then(() => {

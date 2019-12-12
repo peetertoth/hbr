@@ -55,7 +55,7 @@
       onSave() {
         this.editingInProgress = false;
         this.$emit('edit', this.model);
-      }
+      },
     },
   };
 </script>

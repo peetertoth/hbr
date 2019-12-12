@@ -91,9 +91,9 @@
   </b-container>
 </template>
 <script>
+  import datePicker from 'vue-bootstrap-datetimepicker';
   import { mapState } from 'vuex';
   import VisitService from '../service/visit_service';
-  import datePicker from 'vue-bootstrap-datetimepicker';
 
   export default {
     components: {
@@ -228,7 +228,7 @@
       },
       openVisitDetails(id) {
         this.$router.push({ name: 'visit-details', params: { id } });
-      }
+      },
     },
   };
 </script>

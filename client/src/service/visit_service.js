@@ -38,7 +38,7 @@ const setFound = async ({
   const res = await HttpClient.POST('/visit/set_found', {
     studentId,
     visitId,
-    foundAt: foundAt ? foundAt : null,
+    foundAt,
   }, showError);
   return res.data;
 };

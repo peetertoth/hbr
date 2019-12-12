@@ -51,7 +51,8 @@
         {
           "baseIndent": 1
         }
-      ]
+      ],
+      "no-underscore-dangle": ["error", { "allow": ["_id"] }]
     },
     "overrides": [
       {
