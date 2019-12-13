@@ -1,6 +1,7 @@
 .idea/**
 *package-lock.json
 *node_modules
+*dist
 
 ./client.DS_Store
 ./clientnode_modules
