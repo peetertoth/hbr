@@ -90,7 +90,6 @@
         this.$router.push({ name: 'student-details', params: { id: studentId } });
       },
       createNewStudent() {
-        console.log('TODO: open student creation page');
       },
       importStudents() {
         this.$router.push({ name: 'import-students' });

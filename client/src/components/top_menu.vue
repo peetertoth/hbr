@@ -67,7 +67,6 @@
     async created() {
       if (!this.user) {
         // try to get user from server
-        // console.log('User is not in store, try to get from server');
         await this.$store.dispatch('user/getCurrentUser', null, { root: true });
       }
     },

@@ -41,10 +41,8 @@ router.get('/id/:id', authService.authenticationRequired, async (req, res, next)
 // Create
 router.post('/', authService.authenticationRequired, async (req, res, next) => {
   if (validator.validateRequestParam(['name', 'groupId', 'startTime', 'endTime'], req.body, next)) {
-    console.log('done validation failed');
     return;
   }
-  console.log('done validation');
 
   try {
     let createdVisit = await visitService.create(req.body);

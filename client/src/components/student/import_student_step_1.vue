@@ -77,7 +77,6 @@
     },
     methods: {
       parseRawData(data) {
-        console.log(`got data ${data.length}`);
         let splitLines = data.split('\n');
         splitLines = splitLines.map(line => line.split('\t'));
         const parsed = splitLines

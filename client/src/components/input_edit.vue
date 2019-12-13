@@ -37,7 +37,6 @@
       };
     },
     created() {
-      console.log('input edit created');
       this.model = this.value;
     },
     methods: {

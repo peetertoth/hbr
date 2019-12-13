@@ -33,9 +33,7 @@ router.post('/login', async (req, res, next) => {
 });
 
 router.post('/logout', async (req, res) => {
-    console.log('logout user called', req.session.user);
     if (req.session.user) {
-        console.log('destroy session');
         req.session.destroy();
     }
     res.status(200).send();
@@ -50,7 +48,6 @@ router.get('/users', authService.authenticationRequired, async (req, res, next) 
 });
 
 router.get('/current', authService.authenticationRequired, async (req, res) => {
-    console.log('get current user', req.session.user);
     res.status(200).send(req.session.user);
 });
 

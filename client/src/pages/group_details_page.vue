@@ -92,7 +92,6 @@
     },
     methods: {
       onNameChange(name) {
-        console.log('name change', name);
         GroupService.edit(this.group._id, name).then(() => {
           this.group.name = name;
           this.$toast.success({
