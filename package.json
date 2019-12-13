@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "cd server/ && npm run start",
-    "build": "cd client/ && npm install && npm run build"
+    "build": "cd client/ && npm install && npm run build && cd ../server && npm install"
   },
+  "//": "HEROKU DEPLOY",
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.12.0",
     "@vue/cli-plugin-eslint": "^3.12.0",
