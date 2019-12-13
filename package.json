@@ -1,0 +1,9 @@
+{
+  "name": "hbr-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cd server/ && npm run start",
+    "build": "cd client/ && npm install && npm run build"
+  }
+}
