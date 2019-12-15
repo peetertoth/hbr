@@ -1,6 +1,7 @@
 const express = require('express');
 const service = require('../service/UserService');
 const authService = require('../service/AuthService');
+const config = require('../config/config');
 
 const router = express.Router();
 
@@ -9,9 +10,12 @@ router.post('/register', async (req, res) => {
         /**
           * Registration disabled
           */
-        // const user = await service.create(req.body);
-        // res.status(200).send(user);
-        res.status(200).send();
+        if (config.ENV.REGISTRATION_ENABLED === true) {
+            const user = await service.create(req.body);
+            res.status(200).send(user);
+        } else {
+            res.status(200).send();
+        }
     } catch (err) {
         console.error(`Error during register user: ${err}`, err);
         res.status(500).send(err);

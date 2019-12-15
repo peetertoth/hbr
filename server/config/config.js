@@ -9,6 +9,7 @@ const {
     SESS_SECRET = 'secret key',
     CORS = 'http://192.168.0.143:8080,http://178.48.83.132:8080',
     NODE_ENV = 'dev',
+    REGISTRATION_ENABLED = false,
 } = process.env;
 
 module.exports = {
@@ -22,5 +23,6 @@ module.exports = {
         SESS_SECRET,
         CORS,
         NODE_ENV,
+        REGISTRATION_ENABLED,
     }
 };

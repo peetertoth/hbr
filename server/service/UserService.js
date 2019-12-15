@@ -17,7 +17,7 @@ const get = async () => {
 const findByEmailAndPassword = async ({email, password}) => {
     const aUser = await user.findOne({ email });
     if (!aUser) {
-        throw new Error(`Email or password doesn't match. { email: ${email} }`);
+        throw new Error('Email vagy jelszó nem megfelelő');
     }
     const passwordCompareResult = await bcrypt.compare(password, aUser.password);
 
@@ -25,7 +25,7 @@ const findByEmailAndPassword = async ({email, password}) => {
         aUser.password = undefined;
         return aUser;
     }
-    throw new Error(`Email or password doesn't match. { email: ${email} }`);
+    throw new Error('Email vagy jelszó nem megfelelő');
 };
 
 module.exports = {
