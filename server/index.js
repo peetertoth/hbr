@@ -44,6 +44,32 @@ app.use(bodyParser.json());
 
 app.use(morgan('dev'));
 
+// Enable cors in development
+if (config.ENV.NODE_ENV === 'dev') {
+    const cors = require('cors');
+    const corsOrigins = [
+        'http://localhost:8080',
+        'http://192.168.0.143:8080',
+        'http://178.48.83.132:8080',
+    ];
+
+    app.use(cors({
+        origin: function(origin, cb) {
+            if (corsOrigins.indexOf(origin) !== -1 || !origin) {
+                // console.log('allowed', origin);
+                if (!origin) {
+                    console.log('no origin');
+                }
+                cb(null, true);
+            } else {
+                console.log('NOT allowed', origin);
+                cb(new Error('Origin not allowed by CORS'));
+            }
+        },
+        credentials: true,
+    }));
+}
+
 // **Endpoints
 app.use(express.static(path.resolve(__dirname, '../client/dist/')));
 

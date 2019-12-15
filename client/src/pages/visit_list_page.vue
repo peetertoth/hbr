@@ -43,6 +43,8 @@
     <b-modal id="create_visit_modal"
              ref="create_visit_modal"
              title="Megtekintés létrehozása"
+             ok-title="Létrehozás"
+             cancel-title="Mégsem"
              @show="resetCreateNewVisit"
              @hidden="resetCreateNewVisit"
              @ok="handleOkCreateNewVisit">

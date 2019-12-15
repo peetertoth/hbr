@@ -81,7 +81,7 @@
         splitLines = splitLines.map(line => line.split('\t'));
         const parsed = splitLines
           .filter(line => line.length === 3)
-          .map(line => ({ firstName: line[0], lastName: line[1], neptun: line[2] }));
+          .map(line => ({ lastName: line[0], firstName: line[1], neptun: line[2] }));
         return parsed;
       },
     },

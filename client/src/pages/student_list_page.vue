@@ -27,7 +27,6 @@
             </div>
           </template>
 
-
           <template v-slot:cell(actions)="data">
             <b-button variant="outline-info" @click="openStudentDetails(data.item._id)">
               Részletek

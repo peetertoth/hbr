@@ -14,6 +14,11 @@
                         v-bind:key="group" name="Csoport" :value="group" class="ml-2">
             {{ group.name }}</b-form-radio>
         </template>
+        <template v-if="!groups || groups.length < 1">
+          <b-alert show variant="warning">
+            Nincs választható csoport!
+          </b-alert>
+        </template>
       </b-form-group>
 
       <b-button type="submit" variant="primary" :disabled="!model.selectedGroup">

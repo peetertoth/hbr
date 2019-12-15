@@ -19,12 +19,12 @@
       return {
         fields: [
           {
-            key: 'firstName',
-            label: 'Keresztnév',
-          },
-          {
             key: 'lastName',
             label: 'Vezetéknév',
+          },
+          {
+            key: 'firstName',
+            label: 'Keresztnév',
           },
           {
             key: 'neptun',

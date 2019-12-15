@@ -39,6 +39,8 @@
         <b-table stacked="sm" simple hover head-variant="light"
                  :items="filteredItems"
                  :fields="tableFields"
+                 emptyText="Nem található megtekintő hallgató"
+                 show-empty
         >
           <template v-slot:table-busy>
             <div class="text-center text-danger my-2">

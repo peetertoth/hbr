@@ -46,6 +46,8 @@
     <b-modal id="create_group_modal"
              ref="create_group_modal"
              title="Csoport létrehozása"
+             ok-title="Létrehozás"
+             cancel-title="Mégsem"
              @show="resetCreateNewGroup"
              @hidden="resetCreateNewGroup"
              @ok="handleOkCreateNewGroup">
@@ -147,6 +149,7 @@
               this.setup();
             });
           } catch (e) {
+            this.newGroup.nameState = false;
             this.newGroup.nameAlreadyTaken = true;
           }
         } else {
